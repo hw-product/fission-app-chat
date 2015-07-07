@@ -1,0 +1,25 @@
+- content_for(:chat) do
+  %iframe#chat-window{:style => 'border:0;width:100%;'}
+
+:ruby
+  content_for(:container) do
+    render(
+      :partial => 'layouts/panel',
+      :locals => {
+        :id => 'support-chat',
+        :panel_content => yield(:chat)
+      }
+    )
+  end
+
+= render(:partial => 'layouts/container', :locals => {:container_class => 'chat-container', :container_id => 'support-chat-container'})
+
+:javascript
+  load_chat_window = function(){
+    $('#chat-window').height(
+      $(window).height() * 0.75
+    );
+    $('#chat-window').attr('src', '#{@chat_endpoint}&rand-cache=' + Math.floor((Math.random()*1000000)+1));
+  }
+  $(document).ready(load_chat_window);
+  $(document).on('page:load', load_chat_window);
