@@ -5,7 +5,7 @@ module FissionApp
 
       config.to_prepare do |config|
 
-        product = Fission::Data::Models::Product.find_or_create(:name => 'Chat')
+        product = FissionApp.init_product(:chat)
         feature = Fission::Data::Models::ProductFeature.find_or_create(
           :name => 'Chat Access',
           :product_id => product.id
